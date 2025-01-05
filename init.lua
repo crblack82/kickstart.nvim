@@ -388,6 +388,11 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        pickers = {
+          colorscheme = {
+            enable_preview = true
+          }
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -850,6 +855,30 @@ require('lazy').setup({
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
+  },
+
+  -- Automatically switch between light and dark mode
+  {
+    'f-person/auto-dark-mode.nvim',
+    opts = {
+      update_interval = 1000,
+      set_dark_mode = function()
+        vim.api.nvim_set_option_value("background", "dark", {})
+        vim.cmd("colorscheme sorbet")
+      end,
+      set_light_mode = function()
+        vim.api.nvim_set_option_value("background", "light", {})
+        vim.cmd("colorscheme shine")
+      end,
+    }    
+  },
+
+  -- Theme browser for Telescope
+  {
+    'andrew-george/telescope-themes',
+    config = function()
+        require('telescope').load_extension('themes')
+    end
   },
 
   -- Highlight todo, notes, etc in comments
